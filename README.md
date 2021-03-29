@@ -1,3 +1,5 @@
+![Banner](assets/newt.jpeg)
+
 # NeWT: Natural World Tasks
 
 This repository contains resources for working with the NeWT datasets. At this time the tasks are not publicly available because we are currently organizing a competition that will use NeWT as the evaluation set. Once the competition is finished we will release the dataset and lables (currently planned for Fall 2021).
