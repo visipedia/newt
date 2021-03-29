@@ -4,7 +4,7 @@
 
 This repository contains resources for working with the NeWT dataset. 
 
-:exclamation: At this time the binary tasks are not publicly available because we are currently organizing a competition that use NeWT as the evaluation set. Once the competition is finished we will release the dataset and lables (currently planned for Fall 2021).
+:exclamation: At this time the binary tasks are not publicly available because we are currently organizing a competition that uses NeWT as the evaluation set. Once the competition is finished we will release the dataset and lables (currently planned for Fall 2021).
 
 ## Benchmarking Representation Learning for Natural World Image Collections
 
