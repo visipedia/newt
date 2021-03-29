@@ -1,8 +1,32 @@
 # Benchmarking Representation Learning for Natural World Collections
 
 ## Dataset Preparation
+You need to download the following datasets:
 
 ## Pretrained Model Preparation
+You need to download the following pretrained models:
+
+## Create user_configs.py
+You need to create a user_configs.py in the `benchmark/` directory that specifies paths to the various dataset directoried and pretrained model directories:
+```
+################
+# Adjust the following paths for your local setup
+
+# Datasets
+NEWT_DATASET_DIR = "/data/datasets/newt"
+FG_DATASETS = {
+    'CUB' : '/data/datasets/CUB_200_2011/CUB_200_2011/',
+    'CUBExpert' : '/data/datasets/CUB_200_2011/CUB_200_2011/',
+    'NABirds' : '/data/datasets/nabirds/',
+    'OxfordFlowers' : '/data/datasets/oxford_flowers/',
+    'StanfordDogs' : '/data/datasets/stanford_dogs/',
+    'StanfordCars' : '/data/datasets/stanford_cars/',
+}
+
+# Weight Directories
+PYTORCH_PRETRAINED_MODELS_DIR = '/data/models/cvpr21_pretrained_models/pt/'
+TENSORFLOW_PRETRAINED_MODELS_DIR = '/data/models/cvpr21_pretrained_models/tf/'
+```
 
 ## Reproduce the experiments in the paper
 
