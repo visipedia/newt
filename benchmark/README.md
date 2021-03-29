@@ -1,13 +1,25 @@
 # Benchmarking Representation Learning for Natural World Collections
+This directory contains all the resources needed to reproduce the figures and tables that are found in the CVPR 2021 paper Benchmarking Representation Learning for Natural World Collections. 
+
+## Python requirements
+The required python modules along with the exact version that we used can be found in the [requirements.txt](requirements.txt) file. 
 
 ## Dataset Preparation
 You need to download the following datasets:
+  * [NeWT](https://github.com/visipedia/newt)
+  * [Oxford Flowers](https://www.robots.ox.ac.uk/~vgg/data/flowers/)
+  * [CUB200 2011](http://www.vision.caltech.edu/visipedia/CUB-200-2011.html)
+  * [NABirds](http://info.allaboutbirds.org/nabirds/)
+  * [Stanford Dogs](http://vision.stanford.edu/aditya86/ImageNetDogs/main.html)
+  * [Stanford Cars](https://ai.stanford.edu/~jkrause/cars/car_dataset.html)
+
+We suggest storing all the datasets in a common directory (e.g. `/data/datasets`).
 
 ## Pretrained Model Preparation
-You need to download the following pretrained models:
+You can download the pretrained models from the paper [here]()().
 
 ## Create user_configs.py
-You need to create a user_configs.py in the `benchmark/` directory that specifies paths to the various dataset directoried and pretrained model directories:
+You need to create a user_configs.py in the `benchmark/` directory that specifies paths to the various dataset directories and pretrained model directories:
 ```
 ################
 # Adjust the following paths for your local setup
@@ -24,8 +36,8 @@ FG_DATASETS = {
 }
 
 # Weight Directories
-PYTORCH_PRETRAINED_MODELS_DIR = '/data/models/cvpr21_pretrained_models/pt/'
-TENSORFLOW_PRETRAINED_MODELS_DIR = '/data/models/cvpr21_pretrained_models/tf/'
+PYTORCH_PRETRAINED_MODELS_DIR = '/data/models/cvpr21_newt_pretrained_models/pt/'
+TENSORFLOW_PRETRAINED_MODELS_DIR = '/data/models/cvpr21_newt_pretrained_models/tf/'
 ```
 
 ## Reproduce the experiments in the paper
@@ -87,4 +99,14 @@ Create the NeWT tasks stem plot and latex table:
 $ python make_newt_plots.py \
 --result_dir newt_results_linearsvc_1000_standardize_noramlize_grid_search \
 --output_dir figures_v2
+```
+
+## Cite the Paper
+```
+@inproceedings{vanhorn2021newt,
+  title={Benchmarking Representation Learning for Natural World Collections},
+  author={Van Horn, Grant and Cole, Elijah and Beery, Sara and Wilber, Kimberly and Belongie, Serge and Mac Aodha, Oisin},
+  booktitle={Proceedings of the IEEE conference on computer vision and pattern recognition},
+  year={2021}
+}
 ```
