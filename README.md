@@ -8,7 +8,7 @@ This repository contains resources for working with the NeWT dataset.
 
 ## Benchmarking Representation Learning for Natural World Image Collections
 
-Source code for reproducing the experiments in the CVPR 2021 paper can be found in the [benchmark](benchmark/) directory. 
+Source code for reproducing the experiments in the [CVPR 2021 paper](https://arxiv.org/abs/2103.16483) can be found in the [benchmark](benchmark/) directory. 
 
 ## iNaturalist 2021 Dataset
 

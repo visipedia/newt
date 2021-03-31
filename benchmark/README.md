@@ -1,5 +1,5 @@
 # Benchmarking Representation Learning for Natural World Collections
-This directory contains all the resources needed to reproduce the figures and tables that are found in the CVPR 2021 paper "Benchmarking Representation Learning for Natural World Collections." 
+This directory contains all the resources needed to reproduce the figures and tables that are found in the CVPR 2021 paper ["Benchmarking Representation Learning for Natural World Collections."](https://arxiv.org/abs/2103.16483) 
 
 :exclamation:**NOTE**: currently NeWT is being used as an evaluation dataset in a competition, which prevents us from releasing the plot generation code for the NeWT experiments (because that script "leaks" information about each task). Once the competition finishes all the code to produce the NeWT figures will be released. The FG Datasets experiments can be reproduced at this time. 
 
