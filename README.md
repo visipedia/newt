@@ -15,3 +15,14 @@ Source code for reproducing the experiments in the [CVPR 2021 paper](https://arx
 The iNat2021 dataset is available [here](https://github.com/visipedia/inat_comp/tree/master/2021).
 
 
+### Reference  
+If you find our work useful in your research please consider citing our paper:  
+
+```latex
+@inproceedings{van2021benchmarking,
+  title={Benchmarking Representation Learning for Natural World Image Collections},
+  author={Van Horn, Grant and Cole, Elijah and Beery, Sara and Wilber, Kimberly and Belongie, Serge and Mac Aodha, Oisin},
+  booktitle={Computer Vision and Pattern Recognition},
+  year={2021}
+}
+```
