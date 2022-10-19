@@ -134,9 +134,9 @@ def load_dataset(dataset_name, dataset_path):
         return load_cub(dataset_path)
     elif dataset_name == 'OxfordFlowers':
         return load_oxford_flowers(dataset_path)
-    elif dataset_name == 'StandfordDogs':
+    elif dataset_name == 'StanfordDogs':
         return load_stanford_dogs(dataset_path)
-    elif dataset_name == 'StandfordCars':
+    elif dataset_name == 'StanfordCars':
         return load_stanford_cars(dataset_path)
     else:
         raise ValueError("Unknown dataset name: %s" % dataset_name)
