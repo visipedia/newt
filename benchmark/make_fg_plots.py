@@ -55,7 +55,7 @@ def create_fg_plots(fg_results_dir, output_dir):
     # datasets = ['OxfordFlowers', 'CUB', 'CUBExpert', 'NABirds', 'StanfordDogs']
     datasets = ['OxfordFlowers', 'CUB', 'NABirds', 'StanfordDogs']
 
-    result_names=[
+    result_names = [
         'imagenet_simclr',
         'imagenet_simclr_x4',
         'imagenet_simclr_v2',
@@ -159,6 +159,11 @@ def create_fg_plots(fg_results_dir, output_dir):
         'inat2021_mini_swav',
         'inat2021_mini_moco_v2'
     ]
+    model_specs = [
+        model_spec
+        for model_name in result_names
+        for model_spec in configs.model_specs if model_spec['name'] == model_name
+    ]
 
     num_cols = len(datasets)
     num_rows = len(result_names)
@@ -177,8 +182,7 @@ def create_fg_plots(fg_results_dir, output_dir):
             print("  &  \t".join(header) + "\\\\")
             print("\hline\hline")
 
-            for model_name in result_names:
-                model_spec = next(model_spec for model_spec in configs.model_specs if model_spec['name'] == model_name)
+            for model_spec in model_specs:
                 model_scores = fg_model_results_df.loc[model_spec['name']]
 
                 ys = []
