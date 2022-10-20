@@ -13,17 +13,16 @@ import plot_utils
 SMALL_SIZE = 12
 MEDIUM_SIZE = 14
 BIGGER_SIZE = 18
-plt.rc('font', size=SMALL_SIZE)          # controls default text sizes
-plt.rc('axes', titlesize=SMALL_SIZE)     # fontsize of the axes title
-plt.rc('axes', labelsize=MEDIUM_SIZE)    # fontsize of the x and y labels
-plt.rc('xtick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
-plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
-plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
+plt.rc('font', size=SMALL_SIZE)  # controls default text sizes
+plt.rc('axes', titlesize=SMALL_SIZE)  # fontsize of the axes title
+plt.rc('axes', labelsize=MEDIUM_SIZE)  # fontsize of the x and y labels
+plt.rc('xtick', labelsize=SMALL_SIZE)  # fontsize of the tick labels
+plt.rc('ytick', labelsize=SMALL_SIZE)  # fontsize of the tick labels
+plt.rc('legend', fontsize=SMALL_SIZE)  # legend fontsize
 plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
 
 def create_fg_plots(fg_results_dir, output_dir):
-
     fg_results_df = pd.DataFrame(None, columns=['model_name', 'name', 'acc'])
 
     for model_spec in configs.model_specs:
@@ -42,16 +41,19 @@ def create_fg_plots(fg_results_dir, output_dir):
     # models are the rows
     fg_model_results_df = fg_results_df.pivot(index='model_name', columns='name', values='acc')
     fg_model_results_df = fg_model_results_df.loc[[model_spec['name'] for model_spec in configs.model_specs]]
-    fg_model_results_df = fg_model_results_df[['OxfordFlowers', 'CUB', 'CUBExpert', 'NABirds', 'StandfordDogs', 'StandfordCars']]
+    fg_model_results_df = fg_model_results_df[
+        ['OxfordFlowers', 'CUB', 'NABirds', 'StandfordDogs']]
 
     # datasets are the rows
     fg_dataset_results_df = fg_results_df.pivot(index='name', columns='model_name', values='acc')
-    fg_dataset_results_df = fg_dataset_results_df.loc[['OxfordFlowers', 'CUB', 'CUBExpert', 'NABirds', 'StandfordDogs', 'StandfordCars']]
+    fg_dataset_results_df = fg_dataset_results_df.loc[
+        ['OxfordFlowers', 'CUB', 'NABirds', 'StandfordDogs']]
     fg_dataset_results_df = fg_dataset_results_df[[model_spec['name'] for model_spec in configs.model_specs]]
 
     #####################
     # Stem plot for FG tasks
-    datasets = ['OxfordFlowers', 'CUB', 'CUBExpert', 'NABirds', 'StandfordDogs', 'StandfordCars']
+    # datasets = ['OxfordFlowers', 'CUB', 'CUBExpert', 'NABirds', 'StanfordDogs']
+    datasets = ['OxfordFlowers', 'CUB', 'NABirds', 'StanfordDogs']
 
     result_names=[
         'imagenet_simclr',
@@ -73,19 +75,17 @@ def create_fg_plots(fg_results_dir, output_dir):
     baseline_scores = fg_model_results_df.loc['imagenet_supervised'][datasets].values
     exp_results = []
     for model_name in result_names:
-
         model_spec = next(model_spec for model_spec in configs.model_specs if model_spec['name'] == model_name)
 
         if model_spec['name'] == 'imagenet_supervised':
             continue
 
-        task_scores = fg_model_results_df.loc[ model_spec['name']][datasets].values - baseline_scores
-
+        task_scores = fg_model_results_df.loc[model_spec['name']][datasets].values - baseline_scores
         r = {
-            'name' : model_spec['name'],
-            'scores' :  task_scores,
-            'color' : model_spec['color'],
-            'display_name' : model_spec['display_name'],
+            'name': model_spec['name'],
+            'scores': task_scores,
+            'color': model_spec['color'],
+            'display_name': model_spec['display_name'],
         }
 
         if model_spec['name'] == 'random':
@@ -112,10 +112,9 @@ def create_fg_plots(fg_results_dir, output_dir):
 
         exp_results.append(r)
 
-
     result_df = pd.DataFrame(exp_results)
 
-    task_labels = ['Flowers102', 'CUB', 'CUBExpert', 'NABirds', 'StanfordDogs', 'StanfordCars']
+    task_labels = ['Flowers102', 'CUB', 'NABirds', 'StanfordDogs']
 
     plot_utils.task_stem_plot(
         result_df,
@@ -138,7 +137,7 @@ def create_fg_plots(fg_results_dir, output_dir):
     ##############
     # Latex Table of results
 
-    result_names=[
+    result_names = [
         'imagenet_supervised',
         'imagenet_simclr',
         'imagenet_simclr_x4',
@@ -158,7 +157,6 @@ def create_fg_plots(fg_results_dir, output_dir):
         'inat2021_mini_moco_v2'
     ]
 
-
     num_cols = len(datasets)
     num_rows = len(result_names)
 
@@ -177,21 +175,17 @@ def create_fg_plots(fg_results_dir, output_dir):
             print("\hline\hline")
 
             for model_name in result_names:
-
                 model_spec = next(model_spec for model_spec in configs.model_specs if model_spec['name'] == model_name)
-
                 model_scores = fg_model_results_df.loc[model_spec['name']]
 
                 ys = []
                 ry = []
                 for i, label in enumerate(datasets):
-
                     v = model_scores[label]
                     ys.append(
                         "%0.3f" % v
                     )
                     ry.append(v)
-
 
                 td = model_spec['training_dataset'] if model_spec['training_dataset'] is not None else ""
                 to = model_spec['train_objective']
@@ -211,26 +205,21 @@ def create_fg_plots(fg_results_dir, output_dir):
             print("\\end{table*}")
 
 
-
 def parse_args():
-
-    parser = argparse.ArgumentParser(description='Create the stem plot figure and latex table of results for the FG datasets.')
-
+    parser = argparse.ArgumentParser(
+        description='Create the stem plot figure and latex table of results for the FG datasets.')
     parser.add_argument('--result_dir', dest='result_dir',
                         help='Path to the directory containing the FG results.', type=str,
                         required=True)
-
     parser.add_argument('--output_dir', dest='output_dir',
                         help='Path to the directory to save figures and tables.', type=str,
                         required=True)
-
     parsed_args = parser.parse_args()
 
     return parsed_args
 
+
 if __name__ == '__main__':
-
-
     args = parse_args()
 
     if not os.path.exists(args.result_dir):
