@@ -50,50 +50,6 @@ model_specs = [
         "pretrained_weights" : None
     },
     {
-        "name" : "imagenet_supervised_tf",
-        "display_name" : "ImageNet Supervised (tensorflow)",
-        "color" : "grey",
-        "format" : TENSORFLOW,
-        "backbone" : RESNET50,
-        "weights" : TENSORFLOW_PRETRAINED_MODELS_DIR + 'imagenet/supervised/resnet50_no_top.h5',
-        "training_dataset" : IMAGENET,
-        "train_objective" : SUPERVISED,
-        "pretrained_weights" : None
-    },
-    {
-        "name" : "imagenet_simclr",
-        "display_name" : "ImageNet SimCLR",
-        "color" : "C0",
-        "format" : TENSORFLOW,
-        "backbone" : RESNET50,
-        "weights" : TENSORFLOW_PRETRAINED_MODELS_DIR + 'imagenet/simclr_v1/resnet50_simclr_v1_imagenet_no_top.h5',
-        "training_dataset" : IMAGENET,
-        "train_objective" : SIMCLR,
-        "pretrained_weights" : None
-    },
-    {
-        "name" : "imagenet_simclr_x4",
-        "display_name" : "ImageNet SimCLR x4",
-        "color" : "C1",
-        "format" : TENSORFLOW,
-        "backbone" : RESNET50_X4,
-        "weights" : TENSORFLOW_PRETRAINED_MODELS_DIR + 'imagenet/simclr_v1_4x/225206_resnet50_simclr_v1_4x_imagenet_no_top.h5',
-        "training_dataset" : IMAGENET,
-        "train_objective" : SIMCLR,
-        "pretrained_weights" : None
-    },
-    {
-        "name" : "imagenet_simclr_v2",
-        "display_name" : "ImageNet SimCLR v2",
-        "color" : "C2",
-        "format" : TENSORFLOW,
-        "backbone" : RESNET50,
-        "weights" : TENSORFLOW_PRETRAINED_MODELS_DIR + 'imagenet/simclr_v2/250228_resnet50_simclr_v2_1x_imagenet_no_top.h5',
-        "training_dataset" : IMAGENET,
-        "train_objective" : SIMCLR_V2,
-        "pretrained_weights" : None
-    },
-    {
         "name" : "imagenet_swav",
         "display_name" : "ImageNet SwAV",
         "color" : "C3",
@@ -138,17 +94,6 @@ model_specs = [
         "pretrained_weights" : None
     },
     {
-        "name" : "inat2021_simclr",
-        "display_name" : "iNat2021 SimCLR",
-        "color" : "C5",
-        "format" : TENSORFLOW,
-        "backbone" : RESNET50,
-        "weights" : TENSORFLOW_PRETRAINED_MODELS_DIR + 'inat2021/simclr_v1/2623871_resnet50_simclr_v1_inat20_no_top.h5',
-        "training_dataset" : INAT2021,
-        "train_objective" : SIMCLR,
-        "pretrained_weights" : None
-    },
-    {
         "name" : "inat2021_mini_supervised",
         "display_name" : "iNat2021 Mini Supervised",
         "color" : "C6",
@@ -168,39 +113,6 @@ model_specs = [
         "weights" : PYTORCH_PRETRAINED_MODELS_DIR + 'inat2021_supervised_mini_from_scratch.pth.tar',
         "training_dataset" : INAT2021_MINI,
         "train_objective" : SUPERVISED,
-        "pretrained_weights" : None
-    },
-    {
-        "name" : "inat2021_mini_simclr",
-        "display_name" : "iNat2021 Mini SimCLR",
-        "color" : "tab:blue",
-        "format" : TENSORFLOW,
-        "backbone" : RESNET50,
-        "weights" : TENSORFLOW_PRETRAINED_MODELS_DIR + 'inat2021_mini/simclr_v1/resnet50_simclr_v1_inat20_mini_no_top.h5',
-        "training_dataset" : INAT2021_MINI,
-        "train_objective" : SIMCLR,
-        "pretrained_weights" : None
-    },
-    {
-        "name" : "inat2021_mini_simclr_x4",
-        "display_name" : "iNat2021 Mini SimCLR x4",
-        "color" : "tab:orange",
-        "format" : TENSORFLOW,
-        "backbone" : RESNET50_X4,
-        "weights" : TENSORFLOW_PRETRAINED_MODELS_DIR + 'inat2021_mini/simclr_v1_4x/488282_resnet50_simclr_4x_inat_mini_no_top.h5',
-        "training_dataset" : INAT2021_MINI,
-        "train_objective" : SIMCLR,
-        "pretrained_weights" : None
-    },
-    {
-        "name" : "inat2021_mini_simclr_v2",
-        "display_name" : "iNat2021 Mini SimCLR v2",
-        "color" : "tab:green",
-        "format" : TENSORFLOW,
-        "backbone" : RESNET50,
-        "weights" : TENSORFLOW_PRETRAINED_MODELS_DIR + 'inat2021_mini/simclr_v2/488282_resnet50_simclr_v2_inat20_mini_no_top.h5',
-        "training_dataset" : INAT2021_MINI,
-        "train_objective" : SIMCLR_V2,
         "pretrained_weights" : None
     },
     {
@@ -247,5 +159,4 @@ model_specs = [
         "train_objective" : SUPERVISED,
         "pretrained_weights" : IMAGENET
     },
-
 ]
