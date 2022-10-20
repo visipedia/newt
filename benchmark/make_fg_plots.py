@@ -74,9 +74,12 @@ def create_fg_plots(fg_results_dir, output_dir):
 
     baseline_scores = fg_model_results_df.loc['imagenet_supervised'][datasets].values
     exp_results = []
-    for model_name in result_names:
-        model_spec = next(model_spec for model_spec in configs.model_specs if model_spec['name'] == model_name)
-
+    model_specs = [
+        model_spec
+        for model_name in result_names
+        for model_spec in configs.model_specs if model_spec['name'] == model_name
+    ]
+    for model_spec in model_specs:
         if model_spec['name'] == 'imagenet_supervised':
             continue
 
