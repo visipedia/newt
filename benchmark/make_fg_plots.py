@@ -42,12 +42,12 @@ def create_fg_plots(fg_results_dir, output_dir):
     fg_model_results_df = fg_results_df.pivot(index='model_name', columns='name', values='acc')
     fg_model_results_df = fg_model_results_df.loc[[model_spec['name'] for model_spec in configs.model_specs]]
     fg_model_results_df = fg_model_results_df[
-        ['OxfordFlowers', 'CUB', 'NABirds', 'StandfordDogs']]
+        ['OxfordFlowers', 'CUB', 'NABirds', 'StanfordDogs']]
 
     # datasets are the rows
     fg_dataset_results_df = fg_results_df.pivot(index='name', columns='model_name', values='acc')
     fg_dataset_results_df = fg_dataset_results_df.loc[
-        ['OxfordFlowers', 'CUB', 'NABirds', 'StandfordDogs']]
+        ['OxfordFlowers', 'CUB', 'NABirds', 'StanfordDogs']]
     fg_dataset_results_df = fg_dataset_results_df[[model_spec['name'] for model_spec in configs.model_specs]]
 
     #####################
