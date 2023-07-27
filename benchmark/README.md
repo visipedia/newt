@@ -1,14 +1,14 @@
 # Benchmarking Representation Learning for Natural World Collections
 This directory contains all the resources needed to reproduce the figures and tables that are found in the CVPR 2021 paper ["Benchmarking Representation Learning for Natural World Collections."](https://arxiv.org/abs/2103.16483) 
 
-:exclamation:**NOTE**: currently NeWT is being used as an evaluation dataset in a competition, which prevents us from releasing the plot generation code for the NeWT experiments (because that script "leaks" information about each task). Once the competition finishes all the code to produce the NeWT figures will be released. The FG Datasets experiments can be reproduced at this time. 
+:exclamation:**TODO**: Data loaders for the NeWT tasks need to be updated for the public release of the data. 
 
 ## Python requirements
 The required python modules along with the exact version that we used can be found in the [requirements.txt](requirements.txt) file. 
 
 ## Dataset Preparation
 You need to download the following datasets:
-  * ~~[NeWT](https://github.com/visipedia/newt)~~ (not publically available yet)
+  * [NeWT](https://github.com/visipedia/newt)
   * [Oxford Flowers](https://www.robots.ox.ac.uk/~vgg/data/flowers/)
   * [CUB200 2011](http://www.vision.caltech.edu/visipedia/CUB-200-2011.html)
   * [NABirds](http://info.allaboutbirds.org/nabirds/)
@@ -53,7 +53,7 @@ You need to create a user_configs.py in the `benchmark/` directory that specifie
 # Adjust the following paths for your local setup
 
 # Datasets
-NEWT_DATASET_DIR = None
+NEWT_DATASET_DIR = '/data/datasets/newt/'
 FG_DATASETS = {
     'CUB' : '/data/datasets/CUB_200_2011/CUB_200_2011/',
     'CUBExpert' : '/data/datasets/CUB_200_2011/CUB_200_2011/',
@@ -66,8 +66,7 @@ FG_DATASETS = {
 # Pretrained Model Directories
 PYTORCH_PRETRAINED_MODELS_DIR = '/data/models/cvpr21_newt_pretrained_models/pt/'
 TENSORFLOW_PRETRAINED_MODELS_DIR = '/data/models/cvpr21_newt_pretrained_models/tf/'
-```
-Note that the `NEWT_DATASET_DIR` should be None until that dataset is publically available. 
+``` 
 
 ## Reproduce the experiments in the paper
 Run the following scripts from within the `benchmark/` directory. 
