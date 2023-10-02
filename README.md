@@ -24,7 +24,7 @@ Image metadata and task data are stored in a csv file. Each row of the csv file 
   * `task_subcluster`: further subdivides the NeWT tasks into additional clusters. Not all `task_clusters` have additional subclusters. 
   * `task`: the id of the task for this image. Use this field to select all images that belong to a given task. 
   * `label`: `0` or `1` label that corresponds to the binary label for this image. 
-  * `text_label`: A human interpretable text label for the `0` and `1` binary label. 
+  * `text_label`: A human interpretable text label for the `0` and `1` binary label. NOTE: these are *not* unique across tasks. Use the `task` field as the unique identifier for a task. 
   * `split`: either `train` or `test`. 
   * `height`: the height of the image, in pixels. 
   * `width`: the width of the image, in pixels. 
@@ -55,6 +55,9 @@ The image files for these respective rows are accessible at:
   * `newt2021_images/2cb20e06-9072-42fe-bd09-8557dfb591dc.jpg`
 
 ### Example Code
+
+The following example code demonstates how to iterate over the 164 binary classification tasks. There are placeholder commands for extracting features from the images and training binary classifiers. 
+
 ```python
 import os
 
@@ -112,6 +115,151 @@ print(f"Mean Accuracy: {task_results_df['acc'].mean():.3f}")
 
 for task_cluster, mean_acc in task_results_df.groupby('task_cluster')['acc'].mean().iteritems():
     print(f"{task_cluster:10} {mean_acc:0.3f}")
+```
+
+The following code block demonstrates how to iterate over the tasks within each task cluster and subcluster. Partial output is provided after the code block.
+
+```python
+import os
+
+import pandas as pd
+
+####
+# Load in the NeWT dataset
+newt_labels_fp = "newt2021_labels.csv"
+newt_image_dir = "newt2021_images/"
+
+newt_df = pd.read_csv(newt_labels_fp)
+newt_df['filepath'] = newt_df['id'].apply(
+    lambda image_id: os.path.join(newt_image_dir, image_id + ".jpg")
+)
+
+####
+# Print some basic info for the task clusters
+newt_task_clusters = newt_df['task_cluster'].unique()
+print("NeWT Task Clusters")
+for i, task_cluster_name in enumerate(newt_task_clusters):
+    task_cluster_df = newt_df[newt_df['task_cluster'] == task_cluster_name]
+    task_subclusters = task_cluster_df['task_subcluster'].dropna().unique()
+    num_subclusters = task_subclusters.shape[0]
+    num_tasks = task_cluster_df['task'].unique().shape[0]
+    print(f"{i+1:1d}. {task_cluster_name:10s} ({num_subclusters:2d} subclusters) : {num_tasks:3d} tasks")
+    if num_subclusters > 0:
+        for task_subcluster_name in task_subclusters:
+            task_subcluster_df = task_cluster_df[task_cluster_df['task_subcluster'] == task_subcluster_name]
+            num_tasks = task_subcluster_df['task'].unique().shape[0]
+            print(f"\t{task_subcluster_name:10s}: {num_tasks:3d} tasks")
+    print()
+print()
+        
+####
+# Choose a specific task cluster and print basic info about the tasks
+task_cluster_name = 'appearance'
+assert task_cluster_name in newt_task_clusters, f"{task_cluster_name} is not a valid NeWT task cluster"
+task_cluster_df = newt_df[newt_df['task_cluster'] == task_cluster_name]
+
+num_subclusters = task_cluster_df['task_subcluster'].dropna().unique().shape[0]
+num_tasks = task_cluster_df['task'].unique().shape[0]
+
+if num_subclusters > 0:
+    print(f"The task `{task_cluster_name}` has {num_tasks:3d} total tasks, grouped into {num_subclusters} subclusters")
+else:
+    print(f"The task `{task_cluster_name}` has {num_tasks:3d} total tasks")
+    
+
+print(f"Tasks included in the `{task_cluster_name}` cluster:")
+for i, (task_name, task_df) in enumerate(task_cluster_df.groupby('task')):
+    
+    print(f"{i+1:3d}. {task_name:55s}")
+    
+    # Get positive and negative examples for this task
+    task_positive_df = task_df[task_df['label'] == 1]
+    task_negative_df = task_df[task_df['label'] == 0]
+    
+    # Get the text label for the positive and negative classes
+    # NOTE: these are not unique across the tasks. 
+    positive_text_label = task_positive_df.iloc[0]['text_label']
+    negative_text_label = task_negative_df.iloc[0]['text_label']
+    print(f"\tpositive class text label: {positive_text_label}")
+    print(f"\tnegative class text label: {negative_text_label}")
+    print(f"\tpositive images: {task_positive_df.shape[0]:3d}, negative images: {task_negative_df.shape[0]:3d}")
+    print()
+    
+    # Get `train` and `test` examples for this task
+    for split in ['train', 'test']:
+        task_split_df = task_df[task_df['split'] == split]
+        
+        task_split_pos_df = task_split_df[task_split_df['label'] == 1]
+        task_split_neg_df = task_split_df[task_split_df['label'] == 0]
+        
+        print(f"\tpositive {split:5s} images: {task_split_pos_df.shape[0]:3d}")
+        print(f"\tnegative {split:5s} images: {task_split_neg_df.shape[0]:3d}")
+        print()
+```
+Example output from the above code block:
+```
+NeWT Task Clusters
+1. context    ( 0 subclusters) :   8 tasks
+
+2. appearance ( 4 subclusters) : 132 tasks
+   	attribute :   7 tasks
+   	age       :  14 tasks
+   	species   : 102 tasks
+   	health    :   9 tasks
+
+3. gestalt    ( 0 subclusters) :   6 tasks
+
+4. behavior   ( 0 subclusters) :  16 tasks
+
+5. counting   ( 0 subclusters) :   2 tasks
+
+
+The task `appearance` has 132 total tasks, grouped into 4 subclusters
+Tasks included in the `appearance` cluster:
+  1. fgvcx_icassava_healthy_vs_sick                         
+   	positive class text label: sick
+   	negative class text label: healthy
+   	positive images: 200, negative images: 200
+   
+   	positive train images: 100
+   	negative train images: 100
+   
+   	positive test  images: 100
+   	negative test  images: 100
+
+  2. fgvcx_plant_pathology_healthy_vs_sick                  
+   	positive class text label: sick
+   	negative class text label: healthy
+   	positive images: 200, negative images: 200
+   
+   	positive train images: 100
+   	negative train images: 100
+   
+   	positive test  images: 100
+   	negative test  images: 100
+
+  3. inat_non_species_black_eastern_gray_squirrel           
+   	positive class text label: black_squirrel
+   	negative class text label: regular_squirrel
+   	positive images:  77, negative images: 100
+   
+   	positive train images:  50
+   	negative train images:  50
+   
+   	positive test  images:  27
+   	negative test  images:  50
+
+  4. inat_non_species_dead_common_garter_snake              
+   	positive class text label: common_garter_snake
+   	negative class text label: gopher_snake
+   	positive images: 100, negative images: 100
+   
+   	positive train images:  50
+   	negative train images:  50
+   
+   	positive test  images:  50
+   	negative test  images:  50
+...
 ```
 
 
